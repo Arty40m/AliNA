@@ -33,7 +33,7 @@ def process_data(args):
 		struct = matrix2struct(np.squeeze(pred), args['th'])
         
 		if struct is None:
-			warnings.warn("Couldn't process prediction, too hight order knots in the structure")
+			warnings.warn("Couldn't process prediction, the structure contains exceedingly high-order knots. See manual for more information")
 			return
 			
 		print(f'Prediction:\n{unpad(struct, args["data"])}')
