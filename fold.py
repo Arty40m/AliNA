@@ -5,6 +5,12 @@ from utils.predictor import process_data
 
 
 
+def help():
+	p = os.sep.join([sys.path[0], 'help.txt'])
+	with open(p, 'r') as f:
+		print(f.read())
+
+
 def parse_args(arg_list):
     args = {
             'mode':None,
@@ -50,8 +56,11 @@ def parse_args(arg_list):
 
 
 if __name__=='__main__':
-   args = parse_args(sys.argv)
-   process_data(args)
+	if sys.argv[1] in ('--help', '-h'):
+		help()
+		exit(0)
+	args = parse_args(sys.argv)
+	process_data(args)
    
    
    
