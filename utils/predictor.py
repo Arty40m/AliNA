@@ -28,6 +28,9 @@ def progress_bar(i, N):
 def process_data(args):
 	if args['mode']=='seq':
 		inp = seq2matrix(args['data'])
+		if inp is None:
+			return
+			
 		model = load_model()
 		pred = model.predict(np.expand_dims(inp, axis=0))
 		struct = matrix2struct(np.squeeze(pred), args['th'])
@@ -48,6 +51,8 @@ def process_data(args):
 		for i, d in enumerate(f):
 			name, rowseq = d
 			inp = seq2matrix(rowseq)
+			if inp is None:
+				continue
 			
 			pred = model.predict(np.expand_dims(inp, axis=0))
 			struct = matrix2struct(np.squeeze(pred), args['th'])

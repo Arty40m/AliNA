@@ -59,7 +59,8 @@ class FastaRead():
 
 def validate_seq(seq):
 	if len(seq)>256:
-		raise ValueError(f'Max sequence length is 256, got {len(seq)}')
+		warnings.warn(f'Max sequence length is 256, got {len(seq)}')
+		return None
 	s = []
 	for c in seq:
 		uc = c.upper()
@@ -104,6 +105,8 @@ def make_mtx(seq):
     
 def seq2matrix(seq):
     seq = validate_seq(seq)
+    if seq is None:
+    	return None
     seq = pad(seq)
     matrix = make_mtx(seq)
     
