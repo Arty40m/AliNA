@@ -42,8 +42,8 @@ class FastaRead():
 		name=None
 		
 		for l in self.file:
-            if l.isspace():
-                continue
+			if l.isspace():
+				continue
 			if l[0] == '>':
 				if name is not None:
 					raise ValueError(f'Name "{name}" without sequence')
