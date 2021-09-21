@@ -1,10 +1,10 @@
-# AliNA
-___
+AliNA
+===
 
 (ALIgned Nucleic Acids) is an RNA secondary structures prediction algorithm based on deep learning. It is used to predict the DotBracket notation of secondary structure based on primary sequence.
 
-# Installation
-___
+Installation
+===
 
 - Install Python (version 3.8 or greater)
 - Download the repository: 
@@ -28,10 +28,11 @@ ___
     conda install --file requirements.txt
     ```
 
-In case you use Windows it may also be required to [install](www.microsoft.com) the last version of Visual C++ redistributables (used by TensorFlow).
+In case you use Windows it may also be required to [install](https://www.microsoft.com) the last version of Visual C++ redistributables (used by TensorFlow).
 
-# Usage
-___
+Usage
+===
+
 ```
 python3 fold.py [-f, -s] [file, sequence]
 ```
