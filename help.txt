@@ -1,5 +1,4 @@
-I'm a help file
-
-ff
-
-gg
+-s [sequence] read input nucleotides sequence from console
+-f [path_to_file] read input nucleotides sequences from the .fasta file
+-o [path_to_file] write predictions into the specified file
+-th [0, 1] set the sensitivity threshold for processing predictions

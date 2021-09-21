@@ -1,7 +1,5 @@
 import sys
 import os
-from utils.predictor import process_data
-
 
 
 
@@ -60,6 +58,7 @@ if __name__=='__main__':
 		help()
 		exit(0)
 	args = parse_args(sys.argv)
+	from utils.predictor import process_data
 	process_data(args)
    
    
