@@ -36,6 +36,7 @@ ___
 python3 fold.py [-f, -s] [file, sequence]
 ```
 **-s** is the input nucleotides sequence
+
 **-f** is the path to the .fasta file
 
 #### Optional arguments:
