@@ -7,8 +7,8 @@ def probable_triang_matrix(M, sensitivity = 0.5):
     diag = (np.diag(np.ones((mol_size)))==0)
     fm = np.zeros((mol_size, mol_size))
     
-    s = M*diag
     thmask = s>sensitivity
+    s = M*diag*thmask
 
     while np.sum(s)>0:
       m = np.argmax(s)
@@ -21,7 +21,6 @@ def probable_triang_matrix(M, sensitivity = 0.5):
       s[:, r] = 0
       s[:, c] = 0
 
-    fm*=thmask
     x = np.triu((fm + fm.T), k=1)
     return x
 
