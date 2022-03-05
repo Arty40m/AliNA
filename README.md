@@ -7,25 +7,29 @@ Installation
 ===
 
 - Install Python (version 3.8 or greater)
-- Download the repository: 
+- Download the repository and cd there: 
     ```
-    wget https://github.com/Arty40m/AliNA.git
+    git clone https://github.com/Arty40m/AliNA.git
+	cd AliNA
     ```
-    Alternatively, it is possible to download the archive directly.
+    Tensorflow 2.5.0 is required for correct working of AliNA. We recommend using pip to install this particular version of tensorflow. But you can do that within conda environment as well.
 
-- Create virtual environment and install the required packages:
+- Create virtual environment:
 
     - Using pip:
     ```
     python3 -m venv Alina_venv
     . Alina_venv/bin/activate
-    pip install -r requirements.txt
     ```
     - Using conda:
     ```
     conda create --name Alina_venv python=3.9
     conda activate Alina_venv
-    conda install --file requirements.txt
+    ```
+- Install the required packages
+    ```
+    python3 -m pip install --upgrade pip
+	python3 -m pip install -r requirements.txt
     ```
 
 In case you use Windows it may also be required to [install](https://www.microsoft.com) the last version of Visual C++ redistributables (used by TensorFlow).
@@ -34,17 +38,17 @@ Usage
 ===
 
 ```
-python3 fold.py [-f, -s] [file, sequence]
+python3 fold.py [-f <path_to_file> | -s <sequence>]
 ```
-**-s** is the input nucleotides sequence
+**-s** for nucleotides sequence as input
 
-**-f** is the path to the .fasta file
+**-f** for .fasta file as input
 
 #### Optional arguments:
-**-o** is the path to the file which will store the prediction results. If this argument is not specified explicitly, the default value will be used:
+**-o** to specify the path to the file which will store the prediction results. If this argument is not specified explicitly, the default value will be used:
 Prediction_(.fasta file name)
 
-**-th** is the sensitivity threshold when processing predictions **[0, 1]**. The lower the threshold the more bonds will be included into the predicted structure. Unless specified explicitly, the default value is 0.5.
+**-th** to specify the sensitivity threshold when processing predictions **[0, 1]**. The lower the threshold the more bonds will be included into the predicted structure. Unless specified explicitly, the default value is 0.5.
 
 **--help, -h** show additional info about the available commands.
 
