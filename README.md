@@ -12,7 +12,7 @@ Installation
     git clone https://github.com/Arty40m/AliNA.git
 	cd AliNA
     ```
-    Tensorflow 2.5.0 is required for correct working of AliNA. We recommend using pip to install this particular version of tensorflow. But you can do that within conda environment as well.
+    Tensorflow 2.5.0 is required for correct working of AliNA. We recommend to use pip to install this particular version of tensorflow. But you can do that within conda environment as well.
 
 - Create virtual environment:
 
