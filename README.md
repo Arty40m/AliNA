@@ -2,6 +2,7 @@ AliNA
 ===
 
 (ALIgned Nucleic Acids) is an RNA secondary structures prediction algorithm based on deep learning. It is used to predict the DotBracket notation of secondary structure based on primary sequence.
+![Title](/imgs/alina.png)
 
 Installation
 ===
@@ -37,20 +38,27 @@ In case you use Windows it may also be required to [install](https://www.microso
 Usage
 ===
 
-```
-python3 fold.py [-f <path_to_file> | -s <sequence>]
-```
-**-s** for nucleotides sequence as input
+__Quick example:__
 
-**-f** for .fasta file as input
+```
+- RNA sequence
+    python3 fold.py -i GGAGCAUUACCCCCCCAAAACCCUGGGGAUACAGGGCCCA
+- Fasta file
+    python3 fold.py -m file -i path_to_file.fasta -o path_to_predictions_file.out
+```
 
-#### Optional arguments:
-**-o** to specify the path to the file which will store the prediction results. If this argument is not specified explicitly, the default value will be used:
-Prediction_(.fasta file name)
+```
+python3 fold.py [-m {seq,file}] -i <sequence OR fasta_file> [-o output_file] [-th threshold]
+```
+**-m**  - prediction mode: "seq" - for single sequence typed in arguments. "file" - for multiple predictions from .fasta file
+
+**-i** - input sequence or path to fasta file
+
+**-o** - path to the output file for "file" mode. Default - Prediction_<input file name>
 
 **-th** to specify the sensitivity threshold when processing predictions **[0, 1]**. The lower the threshold the more bonds will be included into the predicted structure. Unless specified explicitly, the default value is 0.5.
 
-**--help, -h** show additional info about the available commands.
+**---help, -h** show additional info about the available commands.
 
 #### Additional information:
 
