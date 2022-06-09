@@ -1,66 +1,40 @@
 import sys
 import os
+import argparse
 
 
-
-def help():
-	p = os.sep.join([sys.path[0], 'help.txt'])
-	with open(p, 'r') as f:
-		print(f.read())
-
-
-def parse_args(arg_list):
-    args = {
-            'mode':None,
-            'data':None,
-            'out':None,
-            'th':0.5
-            }
-
-    if len(arg_list)==1:
-        raise ValueError('No arguments')
-    if len(arg_list)%2==0:
-        raise ValueError(f'Argument without value {arg_list[-1]}')
-
-    for i in range(1, len(arg_list), 2):
-        a = arg_list[i]
-        if a not in ('-s', '-f', '-o', '-th'):
-            raise ValueError(f'Invalid argument {a}')
-        if a == '-s':
-            args['mode'] = 'seq'
-            args['data'] = arg_list[i+1]
-        elif a == '-f':
-            args['mode'] = 'file'
-            args['data'] = arg_list[i+1]
-        elif a == '-o':
-            args['out'] = arg_list[i+1]
-        elif a == '-th':
-            args['th'] = float(arg_list[i+1]) 
-            
-    if args['mode'] is None:
-        raise ValueError('Prediction mode is not defined, must be -s or -f')
-    if args['mode'] == 'file':
-        path = args['data']
-        if not os.path.isfile(path):
-            raise ValueError(f'Invalid data path {path}')
-            
-        if args['out'] is None:
-            path_comp = args['data'].split(os.sep)
-            out_name = 'Prediction_'+path_comp[-1]
-            path_comp[-1] = out_name
-            args['out'] = os.sep.join(path_comp)
-
-    return args
-
-
+	
 if __name__=='__main__':
-	if sys.argv[1] in ('--help', '-h'):
-		help()
-		exit(0)
-	args = parse_args(sys.argv)
-	from utils.predictor import process_data
-	process_data(args)
-   
-   
-   
+    parser = argparse.ArgumentParser(description='AliNA args')
+    
+    parser.add_argument('-m', '--mode', type=str, 
+                        choices=['seq', 'file'], default='seq', 
+                        help='Prediction mode: "seq" - for single sequence typed in arguments. "file" - for multiple predictions from .fasta file.')
+                        
+    parser.add_argument('-i', '--input', type=str, 
+                        required=True, metavar='Input', 
+                        help='Input sequence or path to fasta file')
+                        
+    parser.add_argument('-o', '--out', type=str, 
+                        help='Path to the output file for "file" mode. Default - Prediction_<input file name>')
+    
+    parser.add_argument('-th', '--threshold', type=float, default=0.5, 
+                        help="Threshold value in range [0, 1] for model's output processing. The bigger value gives less complementary bonds. Default - 0.5")
+    
+    args = parser.parse_args()
+    assert 0.<args.threshold<1.
+    
+    if args.out is None and args.mode=='file':
+        path_comp = args.input.split(os.sep)
+        path_comp[-1] = f'Prediction_{path_comp[-1]}'
+        args.out = os.sep.join(path_comp)
+    
+    from utils.predictor import process_data
+    process_data(args)
+    
+	
+	
+    
+    
+    
    
