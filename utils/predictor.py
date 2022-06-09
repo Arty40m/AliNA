@@ -12,8 +12,7 @@ from utils.output_process import matrix2struct, unpad
 def load_model():
     print('Creating model...')
     model = AliNA()
-    name =  'Att256Emb16_7-4_18k_l3_val_acc.ckpt'
-    weights = os.sep.join([sys.path[0], 'model', name])
+    weights = os.sep.join([sys.path[0], 'model', 'Weights.ckpt'])
     model.compile()
     print('Loading weights...')
     model.load_weights(weights)
