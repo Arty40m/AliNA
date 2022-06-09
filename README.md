@@ -50,15 +50,15 @@ __Quick example:__
 ```
 python3 fold.py [-m {seq,file}] -i <sequence OR fasta_file> [-o output_file] [-th threshold]
 ```
-**-m**  - prediction mode: "seq" - for single sequence typed in arguments. "file" - for multiple predictions from .fasta file
+**-m, --mode**  - prediction mode: "seq" - for single sequence typed in arguments. "file" - for multiple predictions from .fasta file.
 
-**-i** - input sequence or path to fasta file
+**-i, --input** - input sequence or path to fasta file.
 
-**-o** - path to the output file for "file" mode. Default - Prediction_<input file name>
+**-o, --out** - path to the output file for "file" mode. Default - Prediction_(input file name).
 
-**-th** to specify the sensitivity threshold when processing predictions **[0, 1]**. The lower the threshold the more bonds will be included into the predicted structure. Unless specified explicitly, the default value is 0.5.
+**-th, --threshold** - specifies the sensitivity threshold when processing predictions **[0, 1]**. The lower the threshold the more bonds will be included into the predicted structure. Unless specified explicitly, the default value is 0.5.
 
-**---help, -h** show additional info about the available commands.
+**-h, --help** show help message.
 
 #### Additional information:
 
