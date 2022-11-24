@@ -39,7 +39,7 @@ class AliNA:
             else:
                 warnings.warn('Cuda is not available, AliNA will run on cpu!')
         else:
-            self.device = torch.device("cpu")
+            self.device = 'cpu'
         
         self.model = self.load_model()
         
