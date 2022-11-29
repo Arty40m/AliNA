@@ -1,12 +1,12 @@
 import numpy as np
 
 
-def quantize_matrix(M, sensitivity = 0.5):
+def quantize_matrix(M, threshold = 0.5):
     seq_length = M.shape[-1]
     diag = (np.diag(np.ones((seq_length)))==0)
     fm = np.zeros((seq_length, seq_length))
     
-    thmask = M>sensitivity
+    thmask = M>threshold
     s = M*diag*thmask
 
     while np.sum(s)>0:

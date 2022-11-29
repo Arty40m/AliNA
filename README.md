@@ -83,14 +83,17 @@ alina [-h] [-m {seq,file}] -i <Sequence or Fasta file> [-o <Output file>] [-th <
 ```
 import alina
 
-Alina = alina.AliNA(threshold = 0.5, 
-                skip_error_data = False,
-                warn = True,
-                gpu = False)
+Alina = alina.AliNA(skip_error_data = False,
+                    warn = True,
+                    gpu = False)
                 
 struct = Alina.fold('UAGCGUAGGGGAAACGCCCGGUUACAUU')
 struct
 >>> .((([[.(((......))).)))]]...
+
+struct = Alina.fold('UAGCGUAGGGGAAACGCCCGGUUACAUU', threshold = 0.7)
+struct
+>>> ..((.....(......)...))......
 
 structs = Alina.fold(['CUCUACUUACGGCGCUAAUAAAAAAGCGUUACGUUUU', 'AAAAAAAAAAAAAUUUUUUUUUUUUU'])
 structs
@@ -124,7 +127,7 @@ plt.imshow(p)
 <img src="img/probs.png" width=350px/>
 
 ```
-q = alina.utils.quantize_matrix(p, sensitivity = 0.5)
+q = alina.utils.quantize_matrix(p, threshold = 0.5)
 plt.imshow(q)
 ```
 

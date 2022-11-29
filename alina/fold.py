@@ -14,14 +14,13 @@ def log(n, N):
     
 def process(args):
     alina = AliNA(
-                threshold = args.threshold, 
                 skip_error_data = args.skip_errors,
                 warn = not args.no_warn,
                 gpu = args.gpu
                 )
     
     if args.mode=='seq':
-        pred = alina.fold(args.input)
+        pred = alina.fold(args.input, threshold=args.threshold)
         print(pred)
         return
         
@@ -32,7 +31,7 @@ def process(args):
         
         for n, d in enumerate(f, start=1):
             name, seq = d
-            pred = alina.fold(seq)
+            pred = alina.fold(seq, threshold=args.threshold)
             
             if pred is None:
                 skipped+=1

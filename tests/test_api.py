@@ -65,3 +65,30 @@ class TestSkips:
     def test_invalid_seq(self, seq, model):
         ss = model.fold(seq)
         assert ss[1] is None
+        
+        
+class TestThreshold:
+    
+    @pytest.mark.parametrize(
+        "struct, th",
+        [
+            ('([[[[..[[[[.[[[...{{)]]].]]]]..]]]].......}}', 0.2), 
+            ('([[[[..[[[[.[.[.....)].].]]]]..]]]].........', 0.4),
+            ('.((((..((((..............))))..)))).........', 0.6),
+            ('............................................', 0.8),
+        ]
+    )
+    def test_threshold(self, struct, th):
+        seq = 'AGCGAGGAGUUAUUUGAUGCUAGGAGGCUGAUCGCGGCCGAGGC'
+        Alina = alina.AliNA()
+        ss = Alina.fold(seq, threshold=th)
+        assert ss == struct
+        
+        
+        
+        
+        
+        
+        
+        
+        

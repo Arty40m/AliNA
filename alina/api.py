@@ -20,15 +20,11 @@ class AliNA:
     MODEL_WEIGHTS = 'Tuned_AliNA.pth'
     
     def __init__(self,
-                threshold : int = 0.5, 
                 skip_error_data : bool = False,
                 warn : bool = True,
                 gpu : bool = False
                 ):
         
-        if threshold>1 or threshold<0:
-            raise ValueError(f'Threshold value must be in the range [0, 1], got {threshold}')
-        self.th = threshold
         self.skip_error_data = skip_error_data
         self.warn = warn
         
@@ -45,9 +41,13 @@ class AliNA:
         
         
     def fold(self, 
-             seq : Union[str, list], 
+             seq : Union[str, list],
+             threshold : int = 0.5,
              with_probs : bool = False
             ):
+        
+        if threshold>1 or threshold<0:
+            raise ValueError(f'Threshold value must be in the range [0, 1], got {threshold}')
         
         validate_data(seq)
         
@@ -68,7 +68,7 @@ class AliNA:
                 else:
                     raise e
                     
-            struct, probs = self._predict(val_s)
+            struct, probs = self._predict(val_s, threshold)
             if with_probs:
                 results.append((struct, probs))
             else:
@@ -79,7 +79,7 @@ class AliNA:
         return results
         
         
-    def _predict(self, seq: str):
+    def _predict(self, seq: str, threshold: float):
         l, r = pad_bounds(seq)
         padded_seq = ''.join(['N'*l, seq, 'N'*r])
         
@@ -96,7 +96,7 @@ class AliNA:
         pred = pred.numpy()
         pred = pred[l:-r, l:-r]
         
-        M = quantize_matrix(pred, sensitivity = self.th)
+        M = quantize_matrix(pred, threshold = threshold)
         struct = matrix2struct(M)
         
         return struct, pred
