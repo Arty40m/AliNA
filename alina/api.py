@@ -17,7 +17,7 @@ from .model import Alina, model_parameters
 
 class AliNA:
     
-    MODEL_WEIGHTS = 'Tuned_AliNA.pth'
+    MODEL_WEIGHTS = 'Pretrained_augmented.pth'
     
     def __init__(self,
                 skip_error_data : bool = False,
@@ -34,8 +34,6 @@ class AliNA:
                 self.device = 'cuda'
             else:
                 warnings.warn('Cuda is not available, AliNA will run on cpu!')
-        else:
-            self.device = 'cpu'
         
         self.model = self.load_model()
         
@@ -94,7 +92,8 @@ class AliNA:
         if self.device=='cuda':
             pred = pred.to('cpu')
         pred = pred.numpy()
-        pred = pred[l:-r, l:-r]
+        r = None if r==0 else -r
+        pred = pred[l:r, l:r]
         
         M = quantize_matrix(pred, threshold = threshold)
         struct = matrix2struct(M)

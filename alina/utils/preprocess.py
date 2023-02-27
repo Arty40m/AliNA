@@ -26,5 +26,4 @@ def seq2matrix(seq):
 def pad_bounds(seq):
     left = (256 - len(seq))// 2
     right = 256 - len(seq) - left
-    if right==0: right = -1
     return left, right

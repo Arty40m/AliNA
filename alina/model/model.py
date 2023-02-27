@@ -42,8 +42,8 @@ class ConvBlock(nn.Module):
     def __init__(self, in_ch, out_ch, do):
         super().__init__()
         
-        self.H = nn.Conv2d(in_ch, out_ch, kernel_size=(1,5), stride=1, padding=(2,0))
-        self.W = nn.Conv2d(out_ch, out_ch, kernel_size=(5,1), stride=1, padding=(0,2))
+        self.H = nn.Conv2d(in_ch, out_ch, kernel_size=(1,5), stride=1, padding=(0,2))
+        self.W = nn.Conv2d(out_ch, out_ch, kernel_size=(5,1), stride=1, padding=(2,0))
         torch.nn.init.kaiming_uniform_(self.H.weight, nonlinearity='relu')
         torch.nn.init.kaiming_uniform_(self.W.weight, nonlinearity='relu')
         
