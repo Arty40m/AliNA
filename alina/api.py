@@ -2,6 +2,7 @@ import warnings
 import sys
 warnings.simplefilter('always', UserWarning)
 from typing import Union
+from pathlib import Path
 
 if sys.version_info>=(3, 9):
     import importlib.resources as pkg_resources
@@ -11,18 +12,20 @@ else:
 import torch
 
 from .utils import seq2matrix, pad_bounds, quantize_matrix, matrix2struct, validate_sequence, validate_data
-from .model import Alina, model_parameters
+from .model import Alina, pretrained_model_parameters
 
 
 
 class AliNA:
     
-    MODEL_WEIGHTS = 'Pretrained_augmented.pth'
+    PRETRAINED_WEIGHTS = 'Pretrained_augmented.pth'
     
     def __init__(self,
                 skip_error_data : bool = False,
                 warn : bool = True,
-                gpu : bool = False
+                gpu : bool = False,
+                weights_path : Union[str, Path, None] = None,
+                model_parameters : Union[dict, None] = None
                 ):
         
         self.skip_error_data = skip_error_data
@@ -35,7 +38,7 @@ class AliNA:
             else:
                 warnings.warn('Cuda is not available, AliNA will run on cpu!')
         
-        self.model = self.load_model()
+        self.model = self.load_model(weights_path, model_parameters)
         
         
     def fold(self, 
@@ -87,7 +90,7 @@ class AliNA:
             inp = inp.to(self.device)
         
         with torch.no_grad():
-            pred = self.model(inp)
+            pred = self.model(inp).view((256, 256))
         
         if self.device=='cuda':
             pred = pred.to('cpu')
@@ -101,14 +104,23 @@ class AliNA:
         return struct, pred
         
         
-    def load_model(self):
-        model_pkg = pkg_resources.files("alina.model")
-        weights_path = model_pkg.joinpath(self.MODEL_WEIGHTS)
-        
+    def load_model(self, weights_path, parameters):
+        if parameters is None:
+            model_parameters = pretrained_model_parameters
+        else:
+            model_parameters = parameters
+            
         model = Alina(**model_parameters)
+        
+        if weights_path is None:
+            model_pkg = pkg_resources.files("alina.model")
+            weights_path = model_pkg.joinpath(self.PRETRAINED_WEIGHTS)
+        
+        state = torch.load(weights_path)
+        model.load_state_dict(state['model_state_dict'])
+        
         if self.device=='cuda':
             model = model.to(self.device)
-        model.load_state_dict(torch.load(weights_path))
         model.eval()
 
         return model

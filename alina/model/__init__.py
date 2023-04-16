@@ -1,2 +1,2 @@
 from .model import Alina
-from .config import model_parameters
+from .config import pretrained_model_parameters
