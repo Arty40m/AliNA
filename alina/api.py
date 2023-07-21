@@ -3,6 +3,7 @@ import sys
 warnings.simplefilter('always', UserWarning)
 from typing import Union
 from pathlib import Path
+from collections import namedtuple
 
 if sys.version_info>=(3, 9):
     import importlib.resources as pkg_resources
@@ -19,6 +20,7 @@ from .model import Alina, pretrained_model_parameters
 class AliNA:
     
     PRETRAINED_WEIGHTS = 'Pretrained_augmented.pth'
+    BATCH = namedtuple('Batch', ['seq'])
     
     def __init__(self,
                 skip_error_data : bool = False,
@@ -89,8 +91,9 @@ class AliNA:
         if self.device=='cuda':
             inp = inp.to(self.device)
         
+        b = self.BATCH(seq=inp)
         with torch.no_grad():
-            pred = self.model(inp).view((256, 256))
+            pred = self.model(b).view((256, 256))
         
         if self.device=='cuda':
             pred = pred.to('cpu')
@@ -116,7 +119,7 @@ class AliNA:
             model_pkg = pkg_resources.files("alina.model")
             weights_path = model_pkg.joinpath(self.PRETRAINED_WEIGHTS)
         
-        state = torch.load(weights_path)
+        state = torch.load(weights_path, map_location='cpu')
         model.load_state_dict(state['model_state_dict'])
         
         if self.device=='cuda':
