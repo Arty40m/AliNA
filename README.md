@@ -132,3 +132,7 @@ plt.imshow(q)
 ```
 
 <img src="img/quant.png" width=350px/>
+
+<h2>Cite this work</h2>
+
+- Nasaev, S., Mukanov, A. R., Kuznetsov, I. I., Veselovsky, A. V. (2023). AliNA – a deep learning program for RNA secondary structure prediction. Molecular Informatics. https://doi.org/10.1002/minf.202300113
