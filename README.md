@@ -1,4 +1,4 @@
-<b>This repository is no longer maintained. The latest version of AliNA will be available at</b> [https://github.com/NANOBIOROBOTS-INC/AliNA](https://github.com/NANOBIOROBOTS-INC/AliNA)
+<b>This repository is no longer maintained. The latest version of AliNA will be available at</b> [https://github.com/XELARI-CORP/AliNA](https://github.com/XELARI-CORP/AliNA)
 
 AliNA
 ===
